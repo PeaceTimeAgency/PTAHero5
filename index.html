@@ -1,730 +1,175 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Peace Time Agency | Broadcasting Harmony Across the Timeline</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --cosmic-navy: #0D1B2A;
-            --midnight-purple: #1B263B;
-            --neon-orange: #F26419;
-            --cyber-pink: #F00699;
-            --control-blue: #41B3A3;
-            --dashboard-gray: #2C3E50;
-            --text-light: #F0F0F0;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            background-color: var(--cosmic-navy);
-            color: var(--text-light);
-            font-family: 'Montserrat', sans-serif;
-            overflow-x: hidden;
-            position: relative;
-            min-height: 100vh;
-        }
-        
-        /* Film grain texture overlay */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.15'/%3E%3C/svg%3E");
-            pointer-events: none;
-            z-index: 100;
-        }
-        
-        /* Glassmorphism navigation */
-        header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 20px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 10;
-            backdrop-filter: blur(10px);
-            background: rgba(27, 38, 59, 0.7);
-            border-bottom: 1px solid rgba(242, 100, 25, 0.3);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-        }
-        
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 800;
-            background: linear-gradient(90deg, var(--neon-orange), var(--cyber-pink));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            letter-spacing: 1px;
-        }
-        
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 30px;
-        }
-        
-        nav a {
-            color: var(--text-light);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            position: relative;
-            padding: 5px 0;
-            transition: all 0.3s ease;
-        }
-        
-        nav a:hover {
-            color: var(--neon-orange);
-        }
-        
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--neon-orange);
-            transition: width 0.3s ease;
-        }
-        
-        nav a:hover::after {
-            width: 100%;
-        }
-        
-        /* Hero Section */
-        .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 0 5%;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .peace-clock {
-            position: relative;
-            width: 300px;
-            height: 300px;
-            margin: 0 auto 40px;
-        }
-        
-        .clock-face {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: radial-gradient(circle, var(--midnight-purple) 0%, var(--cosmic-navy) 100%);
-            border: 4px solid var(--neon-orange);
-            box-shadow: 
-                0 0 20px var(--neon-orange),
-                inset 0 0 30px rgba(242, 100, 25, 0.3);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .clock-center {
-            width: 20px;
-            height: 20px;
-            background: var(--cyber-pink);
-            border-radius: 50%;
-            box-shadow: 0 0 15px var(--cyber-pink);
-            z-index: 2;
-        }
-        
-        .orbital-ring {
-            position: absolute;
-            border-radius: 50%;
-            border: 1px solid rgba(240, 6, 153, 0.3);
-            animation: rotate 30s linear infinite;
-            transform-style: preserve-3d;
-        }
-        
-        .ring-1 {
-            width: 350px;
-            height: 350px;
-            top: -25px;
-            left: -25px;
-            animation-duration: 40s;
-        }
-        
-        .ring-2 {
-            width: 400px;
-            height: 400px;
-            top: -50px;
-            left: -50px;
-            animation-duration: 50s;
-            animation-direction: reverse;
-        }
-        
-        .ring-3 {
-            width: 450px;
-            height: 450px;
-            top: -75px;
-            left: -75px;
-            animation-duration: 60s;
-        }
-        
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        h1 {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            line-height: 1.2;
-            text-shadow: 0 0 10px rgba(242, 100, 25, 0.5);
-        }
-        
-        .highlight {
-            color: var(--neon-orange);
-        }
-        
-        .subheading {
-            font-size: 1.4rem;
-            max-width: 700px;
-            margin: 0 auto 40px;
-            color: #ccc;
-        }
-        
-        .cta-button {
-            background: linear-gradient(90deg, var(--neon-orange), var(--cyber-pink));
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            font-size: 1.2rem;
-            font-weight: 700;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 15px rgba(242, 100, 25, 0.5);
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-        }
-        
-        .cta-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: 0.5s;
-            z-index: -1;
-        }
-        
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 20px rgba(242, 100, 25, 0.7);
-        }
-        
-        .cta-button:hover::before {
-            left: 100%;
-        }
-        
-        /* Bento Grid Layout */
-        .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-auto-rows: minmax(250px, auto);
-            gap: 25px;
-            padding: 50px 5%;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        
-        .grid-item {
-            background: rgba(27, 38, 59, 0.7);
-            border: 1px solid rgba(242, 100, 25, 0.2);
-            border-radius: 15px;
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            backdrop-filter: blur(5px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .grid-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 40px rgba(242, 100, 25, 0.3);
-        }
-        
-        .grid-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--neon-orange), var(--cyber-pink));
-        }
-        
-        .grid-item:nth-child(1) {
-            grid-column: span 2;
-        }
-        
-        .grid-item:nth-child(4) {
-            grid-column: span 2;
-        }
-        
-        .item-title {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            color: var(--neon-orange);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .item-icon {
-            font-size: 1.5rem;
-        }
-        
-        .live-streams {
-            display: flex;
-            gap: 20px;
-            overflow-x: auto;
-            padding: 10px 0;
-        }
-        
-        .stream-card {
-            min-width: 250px;
-            background: rgba(13, 27, 42, 0.8);
-            border-radius: 10px;
-            overflow: hidden;
-            border: 1px solid rgba(240, 6, 153, 0.3);
-            box-shadow: 0 0 15px rgba(240, 6, 153, 0.2);
-        }
-        
-        .stream-thumb {
-            height: 150px;
-            background: linear-gradient(45deg, #41B3A3, #F00699);
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .live-badge {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: var(--neon-orange);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
-        
-        .stream-info {
-            padding: 15px;
-        }
-        
-        .stream-title {
-            font-size: 1.1rem;
-            margin-bottom: 5px;
-        }
-        
-        .stream-creator {
-            font-size: 0.9rem;
-            color: #aaa;
-        }
-        
-        .stats-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-        }
-        
-        .stat-card {
-            background: rgba(13, 27, 42, 0.5);
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-            border: 1px solid rgba(65, 179, 163, 0.3);
-        }
-        
-        .stat-value {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--control-blue);
-            margin: 10px 0;
-        }
-        
-        .stat-label {
-            font-size: 1rem;
-            color: #aaa;
-        }
-        
-        .recruit-form input,
-        .recruit-form textarea {
-            width: 100%;
-            padding: 15px;
-            margin: 10px 0;
-            background: rgba(13, 27, 42, 0.5);
-            border: 1px solid rgba(242, 100, 25, 0.3);
-            border-radius: 8px;
-            color: var(--text-light);
-            font-family: 'Montserrat', sans-serif;
-        }
-        
-        .recruit-form textarea {
-            height: 120px;
-            resize: vertical;
-        }
-        
-        .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 30px;
-            margin: 20px 0;
-        }
-        
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-        
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: var(--dashboard-gray);
-            transition: .4s;
-            border-radius: 30px;
-        }
-        
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 22px;
-            width: 22px;
-            left: 4px;
-            bottom: 4px;
-            background-color: var(--text-light);
-            transition: .4s;
-            border-radius: 50%;
-        }
-        
-        input:checked + .slider {
-            background: linear-gradient(90deg, var(--neon-orange), var(--cyber-pink));
-        }
-        
-        input:checked + .slider:before {
-            transform: translateX(30px);
-        }
-        
-        /* Footer */
-        footer {
-            background: linear-gradient(to bottom, var(--cosmic-navy), #000);
-            padding: 60px 5% 30px;
-            margin-top: 50px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .nebula {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 20% 30%, rgba(242, 100, 25, 0.1) 0%, transparent 40%),
-                        radial-gradient(circle at 80% 70%, rgba(240, 6, 153, 0.1) 0%, transparent 40%);
-            animation: nebula-move 30s infinite alternate;
-        }
-        
-        @keyframes nebula-move {
-            0% { background-position: 0% 0%; }
-            100% { background-position: 100% 100%; }
-        }
-        
-        .footer-content {
-            position: relative;
-            z-index: 2;
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .agency-logo {
-            font-size: 3rem;
-            font-weight: 800;
-            background: linear-gradient(90deg, var(--neon-orange), var(--cyber-pink));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 20px;
-            letter-spacing: 3px;
-        }
-        
-        .footer-links {
-            display: flex;
-            gap: 30px;
-            margin: 30px 0;
-        }
-        
-        .footer-links a {
-            color: #aaa;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        
-        .footer-links a:hover {
-            color: var(--neon-orange);
-        }
-        
-        .copyright {
-            color: #666;
-            font-size: 0.9rem;
-            margin-top: 30px;
-            font-family: 'JetBrains Mono', monospace;
-        }
-        
-        /* Responsive Design */
-        @media (max-width: 900px) {
-            .bento-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .grid-item:nth-child(1),
-            .grid-item:nth-child(4) {
-                grid-column: span 1;
-            }
-            
-            h1 {
-                font-size: 2.5rem;
-            }
-            
-            .subheading {
-                font-size: 1.1rem;
-            }
-        }
-        
-        @media (max-width: 600px) {
-            nav ul {
-                display: none;
-            }
-            
-            .peace-clock {
-                width: 200px;
-                height: 200px;
-            }
-            
-            .ring-1 {
-                width: 250px;
-                height: 250px;
-                top: -25px;
-                left: -25px;
-            }
-            
-            .ring-2 {
-                width: 300px;
-                height: 300px;
-                top: -50px;
-                left: -50px;
-            }
-            
-            .ring-3 {
-                width: 350px;
-                height: 350px;
-                top: -75px;
-                left: -75px;
-            }
-            
-            h1 {
-                font-size: 2rem;
-            }
-        }
-    </style>
-</head>
-<body>
-    <!-- Navigation -->
-    <header>
-        <div class="logo">PEACE TIME AGENCY</div>
-        <nav>
-            <ul>
-                <li><a href="#missions">Missions</a></li>
-                <li><a href="#transmissions">Transmissions</a></li>
-                <li><a href="#stats">Galactic Stats</a></li>
-                <li><a href="#recruitment">Recruitment</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="hero">
+<!-- Hero Section -->
+<section class="hero">
+    <div class="orbit-container">
+        <div class="orbit-ring"></div>
+        <div class="orbit-ring"></div>
+        <div class="orbit-ring"></div>
         <div class="peace-clock">
-            <div class="orbital-ring ring-1"></div>
-            <div class="orbital-ring ring-2"></div>
-            <div class="orbital-ring ring-3"></div>
-            <div class="clock-face">
-                <div class="clock-center"></div>
-            </div>
-        </div>
-        <h1>Broadcasting <span class="highlight">Harmony</span> Across the Timeline</h1>
-        <p class="subheading">The premier TikTok LIVE agency fostering peace through digital diplomacy across the galaxy</p>
-        <button class="cta-button">JOIN THE MISSION</button>
-    </section>
-
-    <!-- Bento Grid Sections -->
-    <div class="bento-grid">
-        <!-- Active Transmissions -->
-        <div class="grid-item" id="transmissions">
-            <h2 class="item-title"><span class="item-icon">📡</span> ACTIVE TRANSMISSIONS</h2>
-            <div class="live-streams">
-                <div class="stream-card">
-                    <div class="stream-thumb">
-                        <div class="live-badge">LIVE</div>
-                    </div>
-                    <div class="stream-info">
-                        <div class="stream-title">Cosmic Harmony Session</div>
-                        <div class="stream-creator">@StellarMediator</div>
-                    </div>
-                </div>
-                <div class="stream-card">
-                    <div class="stream-thumb">
-                        <div class="live-badge">LIVE</div>
-                    </div>
-                    <div class="stream-info">
-                        <div class="stream-title">Peace Talks: Andromeda Sector</div>
-                        <div class="stream-creator">@GalacticDiplomat</div>
-                    </div>
-                </div>
-                <div class="stream-card">
-                    <div class="stream-thumb">
-                        <div class="live-badge">LIVE</div>
-                    </div>
-                    <div class="stream-info">
-                        <div class="stream-title">Interstellar Meditation</div>
-                        <div class="stream-creator">@ZenExplorer</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Galactic Peace Stats -->
-        <div class="grid-item" id="stats">
-            <h2 class="item-title"><span class="item-icon">📊</span> GALACTIC PEACE STATS</h2>
-            <div class="stats-container">
-                <div class="stat-card">
-                    <div class="stat-value">98.7%</div>
-                    <div class="stat-label">Conflict Reduction</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">2.4B</div>
-                    <div class="stat-label">Viewers Reached</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">156</div>
-                    <div class="stat-label">Systems United</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">42</div>
-                    <div class="stat-label">Active Agents</div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Agent Recruitment -->
-        <div class="grid-item" id="recruitment">
-            <h2 class="item-title"><span class="item-icon">🚀</span> AGENT RECRUITMENT</h2>
-            <form class="recruit-form">
-                <input type="text" placeholder="Agency ID" required>
-                <input type="email" placeholder="Subspace Email" required>
-                <textarea placeholder="Why do you want to join our mission?" required></textarea>
-                <label class="toggle-switch">
-                    <input type="checkbox">
-                    <span class="slider"></span>
-                </label>
-                <span>I accept the Galactic Code of Conduct</span>
-                <button class="cta-button" style="width: 100%; margin-top: 20px;">SUBMIT APPLICATION</button>
-            </form>
-        </div>
-        
-        <!-- Mission Briefings -->
-        <div class="grid-item" id="missions">
-            <h2 class="item-title"><span class="item-icon">📜</span> MISSION BRIEFINGS</h2>
-            <p>Our agents utilize cutting-edge TikTok LIVE technology to mediate conflicts, spread harmony, and foster understanding between species across the galaxy.</p>
-            <br>
-            <p>With our proprietary Peace Protocol™, we've successfully resolved disputes in the Orion Arm, established diplomatic channels in the Kepler Expanse, and created interstellar cultural exchange programs.</p>
-            <br>
-            <p>Join our elite team of digital diplomats and become part of the most important peacekeeping initiative in galactic history.</p>
+            <div class="peace-sign"></div>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer>
-        <div class="nebula"></div>
-        <div class="footer-content">
-            <div class="agency-logo">PTA</div>
-            <div class="footer-links">
-                <a href="#">Terms of Service</a>
-                <a href="#">Privacy Policy</a>
-                <a href="#">Galactic Regulations</a>
-                <a href="#">Contact Us</a>
-            </div>
-            <div class="copyright">© 2387 Peace Time Agency. All rights reserved across known space.</div>
-        </div>
-    </footer>
+    <div class="hero-content">
+        <h1>Broadcasting Harmony Across the Timeline</h1>
+        <p>A galactic NGO using content creation and digital diplomacy to foster peace across the stars</p>
+    </div>
+</section>
 
-    <script>
-        // Simple animation for the orbital rings
-        document.addEventListener('DOMContentLoaded', function() {
-            const rings = document.querySelectorAll('.orbital-ring');
+<!-- Bento Grid Sections -->
+<div class="bento-grid">
+    <!-- Active Transmissions -->
+    <div id="transmissions" class="bento-card">
+        <h2>📡 Active Transmissions</h2>
+        <p>Live broadcasts from peace agents across the galaxy. Each stream is a diplomatic mission to reduce interstellar tensions.</p>
+        
+        <div class="tiktok-grid">
+            <div class="tiktok-frame">
+                <div class="frame-content">
+                    <div class="frame-username">@AgentStellar</div>
+                    <div class="frame-caption">Negotiating with the Andromeda Collective</div>
+                </div>
+            </div>
+            <div class="tiktok-frame">
+                <div class="frame-content">
+                    <div class="frame-username">@PeaceDiplomat7</div>
+                    <div class="frame-caption">Cultural exchange with the Centauri System</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="toggle-container">
+            <div class="toggle active"></div>
+            <div class="toggle-label">Live</div>
+        </div>
+    </div>
+
+    <!-- Galactic Peace Stats -->
+    <div id="stats" class="bento-card">
+        <h2>📊 Galactic Peace Stats</h2>
+        <p>Real-time metrics showing our impact across the known universe. Updated every 7.2 seconds.</p>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-value">1,427</div>
+                <div class="stat-label">LIVE STREAMS</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">8.4M</div>
+                <div class="stat-label">PEACE POINTS</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">27</div>
+                <div class="stat-label">CONFLICT ZONES</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">93%</div>
+                <div class="stat-label">RESOLUTION RATE</div>
+            </div>
+        </div>
+
+        <div class="toggle-container">
+            <div class="toggle"></div>
+            <div class="toggle-label">Public</div>
+        </div>
+    </div>
+
+    <!-- Agent Recruitment -->
+    <div id="recruitment" class="bento-card">
+        <h2>👩‍🚀 Agent Recruitment</h2>
+        <p>Join our interstellar content diplomacy program. We're seeking creators who can bridge cultural gaps through digital storytelling.</p>
+        
+        <p><strong>Requirements:</strong><br>
+        - 10,000+ followers on any platform<br>
+        - Basic knowledge of interstellar protocols<br>
+        - Ability to mediate between conflicting species</p>
+        
+        <div class="toggle-container">
+            <div class="toggle"></div>
+            <div class="toggle-label">Accepting Applications</div>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <div id="about" class="bento-card">
+        <h2>🌍 About Peace Time Agency</h2>
+        <p>Founded in 2045 by interstellar diplomats and content creators, we use social media as a tool for galactic peacebuilding.</p>
+        
+        <p>Our mission is to prevent conflicts before they escalate by facilitating cross-cultural understanding through creative content.</p>
+        
+        <p>We operate in 12 star systems and have successfully mediated 27 major diplomatic crises through strategic content campaigns.</p>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>Galactic HQ</h3>
+            <p>Orbital Station Peace-7<br>
+            Sol System, Earth Orbit<br>
+            Coordinates: 24.5°N, 78.9°W</p>
             
-            rings.forEach((ring, index) => {
-                // Randomize rotation direction and speed slightly
-                const direction = Math.random() > 0.5 ? 1 : -1;
-                const speed = 30 + (Math.random() * 20);
-                
-                ring.style.animationDuration = `${speed}s`;
-                ring.style.animationDirection = direction === 1 ? 'normal' : 'reverse';
-            });
+            <div class="agency-id">
+                <p>AGENCY ID: <span>PTA-2045-GALAXY</span></p>
+                <p>STATUS: <span>ACTIVE</span></p>
+                <p>SECTOR: <span>INTERSTELLAR DIPLOMACY</span></p>
+            </div>
+        </div>
+        
+        <div class="footer-section">
+            <h3>Contact</h3>
+            <p>hologram@peacetime.agency</p>
+            <p>+1 (212) 555-PEACE</p>
+            <p>Quantum Secure Messaging Available</p>
             
-            // Add hover effect to stream cards
-            const streamCards = document.querySelectorAll('.stream-card');
-            streamCards.forEach(card => {
-                card.addEventListener('mouseenter', () => {
-                    card.style.transform = 'scale(1.03)';
-                });
-                
-                card.addEventListener('mouseleave', () => {
-                    card.style.transform = 'scale(1)';
-                });
-            });
+            <div class="toggle-container" style="margin-top: 2rem;">
+                <div class="toggle active"></div>
+                <div class="toggle-label">Secure Channel</div>
+            </div>
+        </div>
+        
+        <div class="footer-section">
+            <div class="footer-logo">PEACE TIME AGENCY</div>
+            <p>A 1960s-inspired social media hub for galactic diplomacy and peacebuilding through content creation.</p>
+            <p>© 2045-2077 Peace Time Agency. All rights reserved across the known universe.</p>
+        </div>
+    </div>
+    
+    <div class="footer-bottom">
+        <p>Operational since 2045 | This transmission has been approved by the Interstellar Peace Council | 
+        <span style="color: var(--solar-orange);">Transmission ID: PTA-2077-001</span></p>
+    </div>
+</footer>
+
+<script>
+    // Simple interactive elements
+    document.querySelectorAll('.toggle').forEach(toggle => {
+        toggle.addEventListener('click', () => {
+            toggle.classList.toggle('active');
         });
-    </script>
-</body>
-</html>
+    });
+
+    // Scroll animation for navbar
+    window.addEventListener('scroll', () => {
+        const navbar = document.querySelector('.navbar');
+        if (window.scrollY > 50) {
+            navbar.style.padding = '0.8rem 5%';
+            navbar.style.backdropFilter = 'blur(15px)';
+        } else {
+            navbar.style.padding = '1.2rem 5%';
+            navbar.style.backdropFilter = 'blur(12px)';
+        }
+    });
+
+    // Parallax effect for orbital rings
+    document.addEventListener('mousemove', (e) => {
+        const rings = document.querySelectorAll('.orbit-ring');
+        const x = e.clientX / window.innerWidth;
+        const y = e.clientY / window.innerHeight;
+        
+        rings.forEach((ring, index) => {
+            const speed = 0.02 + (index * 0.01);
+            ring.style.transform = `rotate(${360 * speed}deg) translate(${x * 10 - 5}px, ${y * 10 - 5}px)`;
+        });
+    });
+</script>
